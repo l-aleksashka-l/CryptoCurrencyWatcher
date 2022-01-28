@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Cryptos</title>
+</head>
+<body>
+<div th:switch="${cryptos}">
+    <h2 th:case="null">No cryptos found!</h2>
+    <div th:case="*">
+        <h2>Cryptos</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Symbol</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="crypto : ${cryptos}">
+                <td th:text="${crypto.id}"></td>
+                <td th:text="${crypto.symbol}"></td>
+                <td th:text="${crypto.name}"></td>
+                <td th:text="${crypto.price}"></td>
+                <td><a th:href="@{crypto-create/{name}(id=${crypto.name})}">Tracking a crypto</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>

@@ -1,3 +1,2 @@
-# CryptoCurrencyWatcher
-IDFinance Lab
-Done 30%
+# Spring Projects
+IDFinance Lab Done 30%

@@ -5,10 +5,12 @@
     <title>Create user</title>
 </head>
 <body>
-<form action="#" th:action="@{/crypto-create}" th:object="${crypto}" method="post">
-    <label for="name">Name</label>
-    <input type="text" th:field="*{name}" id="name" placeholder="name">
-    <input type="submit" value="Check Crypto">
+<form action="#" th:action="@{/user-create}" th:object="${user}" method="post">
+    <label for="firstName">First name</label>
+    <input type="text" th:field="*{firstName}" id="firstName" placeholder="First Name">
+    <label for="lastName">Last name</label>
+    <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name">
+    <input type="submit" value="Create User">
 </form>
 </body>
 </html>

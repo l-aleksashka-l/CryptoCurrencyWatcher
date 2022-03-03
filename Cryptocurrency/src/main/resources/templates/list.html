@@ -24,7 +24,7 @@
                 <td th:text="${crypto.symbol}"></td>
                 <td th:text="${crypto.name}"></td>
                 <td th:text="${crypto.price}"></td>
-                <td><a th:href="@{crypto-create/{name}(id=${crypto.name})}">Tracking a crypto</a></td>
+                <td><a th:href="/crypto-update">Tracking a crypto</a></td>
             </tr>
             </tbody>
         </table>

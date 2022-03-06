@@ -1,4 +1,4 @@
-package com.lukash.jsonpostgres.entity;
+package com.lukash.jsonpostgres.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

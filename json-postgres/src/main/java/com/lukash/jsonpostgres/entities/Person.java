@@ -1,15 +1,12 @@
 package com.lukash.jsonpostgres.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(schema="json",name="person")
 public class Person {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pk;
 
     private long id;
@@ -17,7 +14,7 @@ public class Person {
     private String lastName;
     private String email;
     private String gender;
-    private String ipAdress;
+    private String ipAddress;
     private String country;
 
     public Long getPk() {
@@ -68,12 +65,12 @@ public class Person {
         this.gender = gender;
     }
 
-    public String getIpAdress() {
-        return ipAdress;
+    public String getIpAddress() {
+        return ipAddress;
     }
 
-    public void setIpAdress(String ipAdress) {
-        this.ipAdress = ipAdress;
+    public void setIpAddress(String ipAdress) {
+        this.ipAddress = ipAdress;
     }
 
     public String getCountry() {

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
 @RestController
@@ -22,7 +21,7 @@ public class PersonController {
 
     private final static Logger logger = LoggerFactory.getLogger(PersonController.class);
 
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
 
     @Autowired
     public PersonController(PersonRepository personRepository) {
@@ -35,7 +34,7 @@ public class PersonController {
 
         File jsonFile = null;
         try {
-            jsonFile = ResourceUtils.getFile("people.json");
+            jsonFile = ResourceUtils.getFile("classpa   th:people.json");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -44,7 +43,7 @@ public class PersonController {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            List<Person> people = objectMapper.readValue(jsonFile, new TypeReference<List<Person>>() {
+            List<Person> people = objectMapper.readValue(jsonFile, new TypeReference<>() {
             });
             personRepository.saveAll(people);
             logger.info("All records saved.");

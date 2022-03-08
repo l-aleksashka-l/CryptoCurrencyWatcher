@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(schema="space",name="planets")
 public class Planet {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

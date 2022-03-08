@@ -6,16 +6,16 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body >
-<h1 th:align="center">Create a Planet:</h1>
+<h1 th:align="center">Delete a Planet:</h1>
 
 
 
-<form th:action="@{/addPlanet}"
+<form th:action="@{/deletePlanet}"
       th:object="${planetForm}" th:align="center" method="POST">
     Name:
     <input type="text" th:field="*{name}" />
     <br/>
-    <input type="submit" value="Create" />
+    <input type="submit" value="Delete" />
 </form>
 
 <br/>

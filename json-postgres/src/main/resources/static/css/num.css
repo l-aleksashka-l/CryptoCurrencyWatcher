@@ -14,7 +14,7 @@
 }
 .table thead th {
     font-weight: bold;
-    text-align: left;
+    text-align: center;
     border: none;
     padding: 10px 15px;
     background: #d8d8d8;
@@ -22,9 +22,11 @@
     counter-reset: rowNumber;
 }
 .table thead tr th:first-child {
+    text-align: left;
     border-radius: 8px 0 0 8px;
 }
 .table thead tr th:last-child {
+    text-align: center;
     border-radius: 0 8px 8px 0;
 }
 .table tbody td {
@@ -38,8 +40,10 @@
     background: #f3f3f3;
 }
 .table tbody tr td:first-child {
+    text-align: left;
     border-radius: 8px 0 0 8px;
 }
 .table tbody tr td:last-child {
+    text-align: center;
     border-radius: 0 8px 8px 0;
 }

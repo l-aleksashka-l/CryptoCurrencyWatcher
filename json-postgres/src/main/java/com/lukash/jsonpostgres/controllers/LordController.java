@@ -1,6 +1,5 @@
 package com.lukash.jsonpostgres.controllers;
 
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lukash.jsonpostgres.entities.Lord;
@@ -50,8 +49,6 @@ public class LordController {
     @Value("${error.numberMessage}")
     private String errorNumberMessage;
 
-
-
     /*@RequestMapping("lord")
     public void lord() {
 
@@ -67,14 +64,13 @@ public class LordController {
         try {
             List<Lord> lords = objectMapper.readValue(jsonFile, new TypeReference<>() {
             });
-            //lordRepository.saveAll(lords);
+            lordRepository.saveAll(lords);
             //logger.info("All lords saved.");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }*/
-
 
     @RequestMapping(value = { "/lordList" }, method = RequestMethod.GET)
     public String LordList(Model model) {

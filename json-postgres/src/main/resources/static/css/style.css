@@ -1,9 +1,9 @@
 h1 {
-    color:#0000FF;
+    color:black;
 }
 
 h2 {
-    color:#FF0000;
+    color: darkblue;
 }
 
 table {
@@ -35,7 +35,7 @@ a {
     margin-right: 0.625%;
     text-align: center;
     line-height: 3;
-    color: black;
+    color: ghostwhite;
 }
 
 li:last-child a {
@@ -43,14 +43,14 @@ li:last-child a {
 }
 
 a:link, a:visited, a:focus {
-    background: yellow;
+    background: rebeccapurple;
 }
 
 a:hover {
-    background: orange;
+    background: purple;
 }
 
 a:active {
-    background: red;
+    background: hotpink;
     color: white;
 }

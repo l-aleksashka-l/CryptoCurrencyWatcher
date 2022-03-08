@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:align="center">Planet List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/num.css}"/>
+
+</head>
+<body>
+<h1 th:align="center">Planet List</h1>
+<ul th:align="center"><a href="addPlanet" th:align="center">Add Planet</a>
+    <a href="index" th:align="center">Start page</a></ul>
+
+<br/><br/>
+<div th:align="center">
+    <table class="table" border="1">
+        <tr>
+            <thead><th>Name</th></thead>
+
+        </tr>
+        <tbody><tr th:each ="planet : ${planets}">
+            <td th:utext="${planet.name}">...</td>
+        </tr></tbody>
+
+    </table>
+</div>
+</body>
+</html>

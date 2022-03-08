@@ -34,7 +34,7 @@ public class PersonController {
 
         File jsonFile = null;
         try {
-            jsonFile = ResourceUtils.getFile("classpa   th:people.json");
+            jsonFile = ResourceUtils.getFile("classpath:people.json");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

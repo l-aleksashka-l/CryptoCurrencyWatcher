@@ -13,6 +13,7 @@ public class Lord {
     private int age;
     private String name;
 
+
     public Long getId() {
         return id;
     }
@@ -38,5 +39,10 @@ public class Lord {
     }
 
     public Lord() {
+    }
+
+    public Lord(int age, String name) {
+        this.age = age;
+        this.name = name;
     }
 }

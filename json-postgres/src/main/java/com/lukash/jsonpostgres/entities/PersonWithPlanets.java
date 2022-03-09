@@ -16,6 +16,12 @@ public class PersonWithPlanets {
     public PersonWithPlanets() {
     }
 
+
+    public PersonWithPlanets(String lordName, String planetName) {
+        this.lordName = lordName;
+        this.planetName = planetName;
+    }
+
     public Long getId() {
         return id;
     }

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Add Planet</title>
+    <title>Delete Planet</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body >
@@ -22,7 +22,12 @@
 
 <!-- Check if errorMessage is not null and not empty -->
 
-<div th:if="${errorMessage}" th:utext="${errorMessage}"
+<div th:if="${errorMessage}" th:utext="${errorMessage}" th:align="center"
+     style="color:orangered;font-style:italic;">
+    ...
+</div>
+
+<div th:if="${errorNothingMessage}" th:utext="${errorNothingMessage}" th:align="center"
      style="color:orangered;font-style:italic;">
     ...
 </div>

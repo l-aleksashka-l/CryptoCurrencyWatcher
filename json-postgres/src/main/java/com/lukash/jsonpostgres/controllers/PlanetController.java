@@ -41,6 +41,7 @@ public class PlanetController {
     @Value("${error.message}")
     private String errorMessage;
 
+
     @RequestMapping(value = { "/planetList" }, method = RequestMethod.GET)
     public String planetList(Model model) {
 
@@ -58,42 +59,18 @@ public class PlanetController {
         return "addPlanet";
     }
 
-    @RequestMapping(value = { "/addPlanet" }, method = RequestMethod.POST)
-    public String savePlanet(Model model, //
-                           @ModelAttribute("planetForm") PlanetForm planetForm) {
 
-        String name = planetForm.getName();
 
-        if (name != null && name.length() > 0 //
-                ) {
-            Planet newPlanet = new Planet(name);
-            planetRepository.save(newPlanet);
-            return "redirect:/planetList";
-        }
 
-        model.addAttribute("errorMessage", errorMessage);
-        return "addPlanet";
-    }
-
-    @RequestMapping(value ={"/deletePlanet"}, method = RequestMethod.GET)
-    public String showDeletePlanetPage(Model model){
+    @RequestMapping(value = { "/deletePlanet" }, method = RequestMethod.GET)
+    public String showDeletePlanetPage(Model model) {
         PlanetForm planetForm = new PlanetForm();
         model.addAttribute("planetForm", planetForm);
 
         return "deletePlanet";
     }
-    @RequestMapping(value ={"/deletePlanet"}, method = RequestMethod.POST)
-    public String deletePlanet(Model model, @ModelAttribute("planet") PlanetForm planetForm){
-        String name = planetForm.getName();
 
-        if(name!=null && name.length()>0){
-            planetRepository.deleteById(Long.parseLong(name));
-            logger.info("Delete " + name);
-            return "redirect:/planetList";
-        }
-        model.addAttribute("errorMessage", errorMessage);
-        return "deletePlanet";
-    }
+
 
 
     /*@RequestMapping("planet")

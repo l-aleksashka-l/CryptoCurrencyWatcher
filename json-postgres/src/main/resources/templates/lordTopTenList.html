@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Lord List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/num.css}"/>
+</head>
+<body >
+<h1 th:align="center">Lord Top Ten List</h1>
+<ul th:align="center"><a href="addLord" th:align="center">Add Lord</a>
+    <a href="index" th:align="center">Start page</a>
+</ul>
+
+<br/><br/>
+<div th:align="center">
+    <table class="table" border="1" cellpadding="0">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+        </tr>
+        </thead>
+        <tbody><tr th:each ="lord : ${topTen}">
+            <td th:utext="${lord.name}">...</td>
+            <td th:utext="${lord.age}">...</td>
+        </tr></tbody>
+
+    </table>
+
+</div>
+</body>
+</html>

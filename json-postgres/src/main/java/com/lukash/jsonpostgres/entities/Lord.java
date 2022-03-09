@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(schema="space",name="lords")
-public class Lord {
+public class Lord implements Comparable<Lord> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -45,4 +45,20 @@ public class Lord {
         this.age = age;
         this.name = name;
     }
+
+
+    @Override
+    public int compareTo(Lord o) {
+        Lord tmp = (Lord) o;
+        if (this.age < tmp.age) {
+            /* текущее меньше полученного */
+            return -1;
+        } else if (this.age > tmp.age) {
+            /* текущее больше полученного */
+            return 1;
+        }else return 0;
+        // текущее равно по
+    }
+
+
 }

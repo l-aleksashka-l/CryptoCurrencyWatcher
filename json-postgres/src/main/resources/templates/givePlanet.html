@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Add Lord</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/num.css}"/>
+</head>
+<body >
+<h1 th:align="center">Give Planet</h1>
+
+
+
+<form th:action="@{/givePlanet}"
+      th:object="${personWithPlanetForm}" th:align="center" method="POST">
+    LordName:
+    <input type="text" th:field="*{lordName}" />
+    <br/>
+    PlanetName:
+    <input type="text" th:field="*{planetName}" />
+    <br/>
+    <input type="submit" value="Give" />
+</form>
+<div th:align="center">
+    <table class="table" border="1" cellpadding="0">
+        <thead>
+        <tr>
+            <th>Available Planets</th>
+        </tr>
+        </thead>
+        <tbody><tr th:each ="lord : ${tempPerson}">
+            <td th:utext="${lord.planetName}">...</td>
+        </tr></tbody>
+
+    </table>
+</div>
+<br/>
+
+<!-- Check if errorMessage is not null and not empty -->
+
+<div th:if="${errorMessage}" th:utext="${errorMessage}" th:align="center"
+     style="color:red;font-style:italic;">
+    ...
+</div><div th:if="${errorBadMessage}" th:utext="${errorBadMessage}" th:align="center"
+     style="color:red;font-style:italic;">
+    ...
+</div><div th:if="${errorNothingLordMessage}" th:utext="${errorNothingLordMessage}" th:align="center"
+     style="color:red;font-style:italic;">
+    ...
+</div>
+
+
+</body>
+</html>

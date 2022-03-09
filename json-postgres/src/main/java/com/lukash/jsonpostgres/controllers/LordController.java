@@ -18,6 +18,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -28,11 +30,6 @@ public class LordController {
     private final LordRepository lordRepository;
 
     private static List<Lord> lords = new ArrayList<Lord>();
-
-    static {
-        lords.add(new Lord(12,"Bill"));
-        lords.add(new Lord(23, "Steve"));
-    }
 
 
     @Autowired
@@ -81,6 +78,25 @@ public class LordController {
         model.addAttribute("lords", lords);
 
         return "lordList";
+    }
+
+    @RequestMapping(value = { "/lordTopTenList" }, method = RequestMethod.GET)
+    public String LordTopTenList(Model model) {
+
+        lords = null;
+        lords = (List<Lord>) lordRepository.findAll();
+        List<Lord> lordsTemp = lords;
+        Collections.sort(lordsTemp);
+        int a = 0;
+        List<Lord> topTen = new ArrayList<Lord>();
+        for(Lord lord: lordsTemp){
+            if(a==10)break;
+            topTen.add(lord);
+            a++;
+        }
+        model.addAttribute("topTen", topTen);
+
+        return "lordTopTenList";
     }
 
     @RequestMapping(value = { "/addLord" }, method = RequestMethod.GET)

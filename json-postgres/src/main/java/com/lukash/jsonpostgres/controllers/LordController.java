@@ -42,6 +42,9 @@ public class LordController {
     @Value("${error.message}")
     private String errorMessage;
 
+    @Value("${error.lordExist}")
+    private String errorLordExist;
+
 
     @Value("${error.numberMessage}")
     private String errorNumberMessage;
@@ -115,13 +118,21 @@ public class LordController {
         String name = lordForm.getName();
         String age = lordForm.getAge();
 
+        lords = null;
+        lords = (List<Lord>) lordRepository.findAll();
 
         if (name != null && name.length() > 0 //
                 && age != null && age.length() > 0) {
             try{
-            Lord newLord = new Lord(Integer.parseInt(age), name);
-            lordRepository.save(newLord);
-            lords.add(newLord);
+                for(Lord lord:lords){
+                    if(name.equals(lord.getName())){
+                        model.addAttribute("errorLordExist", errorLordExist);
+                        return "addLord";
+                    }
+                }
+                Lord newLord = new Lord(Integer.parseInt(age), name);
+                lordRepository.save(newLord);
+                lords.add(newLord);
             }
             catch(NumberFormatException ex){
                 model.addAttribute("errorNumberMessage", errorNumberMessage);

@@ -7,8 +7,8 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/num.css}"/>
 </head>
 <body >
-<h1 th:align="center">Lord List</h1>
-<ul th:align="center"><a href="addLord" th:align="center">Add Lord</a>
+<h1 th:align="center">Trans List</h1>
+<ul th:align="center">
     <a href="index" th:align="center">Start page</a>
 </ul>
 
@@ -17,20 +17,20 @@
     <table class="table" border="1" cellpadding="0">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Age</th>
+            <th>Lord Name</th>
+
         </tr>
         </thead>
-        <tbody><tr th:each ="lord : ${lords}">
+        <tbody><tr th:each ="lord : ${lordsTemp}">
             <td th:utext="${lord.name}">...</td>
-            <td th:utext="${lord.age}">...</td>
+
         </tr></tbody>
 
     </table>
 
 </div>
 <ul th:align="center">
-    <a href="lordList" th:align="center">Up</a>
+    <a href="lordWithoutPlanet" th:align="center">Up</a>
 </ul>
 </body>
 </html>

@@ -4,12 +4,12 @@ package com.lukash.jsonpostgres.controllers;
 import com.lukash.jsonpostgres.entities.Lord;
 import com.lukash.jsonpostgres.entities.PersonWithPlanets;
 import com.lukash.jsonpostgres.entities.Planet;
-import com.lukash.jsonpostgres.form.LordForm;
 import com.lukash.jsonpostgres.form.PersonWithPlanetForm;
 import com.lukash.jsonpostgres.form.PlanetForm;
 import com.lukash.jsonpostgres.repositories.LordRepository;
 import com.lukash.jsonpostgres.repositories.PersonWithPlanetsRepository;
 import com.lukash.jsonpostgres.repositories.PlanetRepository;
+import org.hibernate.collection.internal.PersistentBag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,13 +51,16 @@ public class PersonWithPlanetsController {
     @Value("${error.nothingPlanetMessage}")
     private String errorNothingPlanetMessage;
 
+    @Value("${error.planetExist}")
+    private String errorPlanetExist;
+
     @Value("${error.nothingLordMessage}")
     private String errorNothingLordMessage;
 
     @Value("${error.badMessage}")
     private String errorBadMessage;
 
-    @RequestMapping(value = { "/deletePlanet" }, method = RequestMethod.POST)
+    @RequestMapping(value = {"/deletePlanet"}, method = RequestMethod.POST)
     public String deletePlanet(Model model, //
                                @ModelAttribute("planetForm") PlanetForm planetForm) {
 
@@ -67,16 +70,16 @@ public class PersonWithPlanetsController {
         ) {
             planets = (List<Planet>) planetRepository.findAll();
             persons = (List<PersonWithPlanets>) personWithPlanetsRepository.findAll();
-            for(PersonWithPlanets person: persons){
-                if(person.getPlanetName().equals(name)) {
+            for (PersonWithPlanets person : persons) {
+                if (person.getPlanetName().equals(name)) {
                     persons.remove(person);
                     personWithPlanetsRepository.deleteAll();
                     personWithPlanetsRepository.saveAll(persons);
                     break;
                 }
             }
-            for(Planet planet: planets){
-                if(planet.getName().equals(name)) {
+            for (Planet planet : planets) {
+                if (planet.getName().equals(name)) {
                     planets.remove(planet);
                     planetRepository.deleteAll();
                     planetRepository.saveAll(planets);
@@ -91,14 +94,22 @@ public class PersonWithPlanetsController {
         return "deletePlanet";
     }
 
-    @RequestMapping(value = { "/addPlanet" }, method = RequestMethod.POST)
+    @RequestMapping(value = {"/addPlanet"}, method = RequestMethod.POST)
     public String savePlanet(Model model, //
                              @ModelAttribute("planetForm") PlanetForm planetForm) {
 
         String name = planetForm.getName();
-
+        planets = null;
+        planets = (List<Planet>) planetRepository.findAll();
         if (name != null && name.length() > 0 //
         ) {
+
+            for(Planet planet:planets){
+                if(name.equals(planet.getName())){
+                    model.addAttribute("errorPlanetExist", errorPlanetExist);
+                    return "addPlanet";
+                }
+            }
             Planet newPlanet = new Planet(name);
             planetRepository.save(newPlanet);
             PersonWithPlanets newPerson = new PersonWithPlanets(null, name);
@@ -110,7 +121,7 @@ public class PersonWithPlanetsController {
         return "addPlanet";
     }
 
-    @RequestMapping(value = { "/transList" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/transList"}, method = RequestMethod.GET)
     public String transList(Model model) {
 
         persons = null;
@@ -121,7 +132,7 @@ public class PersonWithPlanetsController {
         return "transList";
     }
 
-    @RequestMapping(value = { "/givePlanet" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/givePlanet"}, method = RequestMethod.GET)
     public String showGivePlanetPage(Model model) {
 
         PersonWithPlanetForm personWithPlanetForm = new PersonWithPlanetForm();
@@ -130,40 +141,52 @@ public class PersonWithPlanetsController {
 
         persons = null;
         persons = (List<PersonWithPlanets>) personWithPlanetsRepository.findAll();
-        for(PersonWithPlanets person: persons){
-            if(person.getLordName() == null)
+
+        boolean x = false;
+
+        for (PersonWithPlanets person : persons) {
+            if (person.getLordName() == null && !x) {
+                x = true;
+                tempPersons = null;
+                tempPersons = new ArrayList<>();
+            }
+            if (person.getLordName() == null && x) {
                 tempPersons.add(person);
+            }
+
         }
         model.addAttribute("tempPerson", tempPersons);
         return "givePlanet";
     }
 
-    @RequestMapping(value = { "/givePlanet" }, method = RequestMethod.POST)
+    @RequestMapping(value = {"/givePlanet"}, method = RequestMethod.POST)
     public String givePlanet(Model model, //
-                               @ModelAttribute("personWithPlanetForm") PersonWithPlanetForm personWithPlanetForm) {
+                             @ModelAttribute("personWithPlanetForm") PersonWithPlanetForm personWithPlanetForm) {
 
         String planetName = personWithPlanetForm.getPlanetName();
         String lordName = personWithPlanetForm.getLordName();
 
         lords = (List<Lord>) lordRepository.findAll();
-        if (planetName != null && planetName.length() > 0 && lordName != null && lordName.length() > 0 ) {
+        if (planetName != null && planetName.length() > 0 && lordName != null && lordName.length() > 0) {
             boolean a = true;
 
-            for(PersonWithPlanets person: tempPersons){
-                if(person.getPlanetName().equals(planetName)) {
+            for (PersonWithPlanets person : tempPersons) {
+                if (person.getPlanetName().equals(planetName)) {
                     a = false;
                     break;
                 }
             }
-            if(a){
+            if (a) {
                 model.addAttribute("errorBadMessage", errorBadMessage);
                 return "givePlanet";
             }
-            for(Lord lord: lords){
-                if(lord.getName().equals(lordName)) {
+            for (Lord lord : lords) {
+                if (lord.getName().equals(lordName)) {
                     System.out.println(lord.getName());
-                    personWithPlanetsRepository.save(new PersonWithPlanets(lordName,planetName));
-                    tempPersons = null;
+                    persons.remove(new PersonWithPlanets(lordName, planetName));
+                    personWithPlanetsRepository.deleteAll();
+                    personWithPlanetsRepository.saveAll(persons);
+                    personWithPlanetsRepository.save(new PersonWithPlanets(lordName, planetName));
                     return "redirect:/index";
                 }
             }
@@ -175,6 +198,39 @@ public class PersonWithPlanetsController {
         model.addAttribute("errorMessage", errorMessage);
         return "givePlanet";
     }
+
+    @RequestMapping(value = { "/lordWithoutPlanet" }, method = RequestMethod.GET)
+    public String LordTopTenList(Model model) {
+
+        persons = null;
+        persons = (List<PersonWithPlanets>) personWithPlanetsRepository.findAll();
+        lords = null;
+        lords = (List<Lord>) lordRepository.findAll();
+        boolean x = false;
+        List<Lord> temp = new ArrayList<Lord>();
+
+        for(Lord lord:lords){
+            boolean fact = true;
+            for(PersonWithPlanets person: persons){
+                if(lord.getName().equals(person.getLordName())){
+                    fact  = false;
+                    break;
+                }
+            }
+            if(fact && !x) {
+                x = true;
+                temp = null;
+                temp = new ArrayList<>();
+            }
+            if(fact)
+                temp.add(lord);
+        }
+        model.addAttribute("lordsTemp", temp);
+
+        return "lordWithoutPlanet";
+    }
+
+
     /*@RequestMapping(value = { "/write" }, method = RequestMethod.GET)
     public String planetList(Model model) {
         lords = (List<Lord>) lordRepository.findAll();

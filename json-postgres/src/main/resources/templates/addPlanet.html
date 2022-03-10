@@ -20,9 +20,16 @@
 
 <br/>
 
+<ul th:align="center">
+    <a href="index" th:align="center">Start page</a>
+</ul>
 <!-- Check if errorMessage is not null and not empty -->
 
 <div th:if="${errorMessage}" th:utext="${errorMessage}" th:align="center"
+     style="color:orangered;font-style:italic;">
+    ...
+</div>
+<div th:if="${errorPlanetExist}" th:utext="${errorPlanetExist}" th:align="center"
      style="color:orangered;font-style:italic;">
     ...
 </div>

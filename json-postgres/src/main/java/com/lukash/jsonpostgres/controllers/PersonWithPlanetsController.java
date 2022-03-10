@@ -104,8 +104,8 @@ public class PersonWithPlanetsController {
         if (name != null && name.length() > 0 //
         ) {
 
-            for(Planet planet:planets){
-                if(name.equals(planet.getName())){
+            for (Planet planet : planets) {
+                if (name.equals(planet.getName())) {
                     model.addAttribute("errorPlanetExist", errorPlanetExist);
                     return "addPlanet";
                 }
@@ -182,8 +182,8 @@ public class PersonWithPlanetsController {
             }
             for (Lord lord : lords) {
                 if (lord.getName().equals(lordName)) {
-                    System.out.println(lord.getName());
-                    persons.remove(new PersonWithPlanets(lordName, planetName));
+                    persons = (List<PersonWithPlanets>) personWithPlanetsRepository.findAll();
+                    persons.removeIf(person -> person.getPlanetName().equals(planetName));
                     personWithPlanetsRepository.deleteAll();
                     personWithPlanetsRepository.saveAll(persons);
                     personWithPlanetsRepository.save(new PersonWithPlanets(lordName, planetName));
@@ -199,7 +199,7 @@ public class PersonWithPlanetsController {
         return "givePlanet";
     }
 
-    @RequestMapping(value = { "/lordWithoutPlanet" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/lordWithoutPlanet"}, method = RequestMethod.GET)
     public String LordTopTenList(Model model) {
 
         persons = null;
@@ -209,20 +209,20 @@ public class PersonWithPlanetsController {
         boolean x = false;
         List<Lord> temp = new ArrayList<Lord>();
 
-        for(Lord lord:lords){
+        for (Lord lord : lords) {
             boolean fact = true;
-            for(PersonWithPlanets person: persons){
-                if(lord.getName().equals(person.getLordName())){
-                    fact  = false;
+            for (PersonWithPlanets person : persons) {
+                if (lord.getName().equals(person.getLordName())) {
+                    fact = false;
                     break;
                 }
             }
-            if(fact && !x) {
+            if (fact && !x) {
                 x = true;
                 temp = null;
                 temp = new ArrayList<>();
             }
-            if(fact)
+            if (fact)
                 temp.add(lord);
         }
         model.addAttribute("lordsTemp", temp);
